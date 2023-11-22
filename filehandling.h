@@ -8,7 +8,6 @@
 #include <sstream>
 #include <string>
 #include <fstream>
-#include "encoder.h"
 
 class FileHandler {
 public:

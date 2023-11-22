@@ -1,11 +1,9 @@
-#include <iostream>
-#include <string>
-#include <vector>
 #include "encoder.h"
-#include "filehandling.h"
 
 int main() {
-    Solution solution("1011000");
-    solution.Convert();
+    Encoder encoder("1011000");
+    bool success;
+    success=encoder.Convert();
+
     return 0;
 }
