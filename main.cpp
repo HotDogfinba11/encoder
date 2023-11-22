@@ -5,7 +5,7 @@
 #include "filehandling.h"
 
 int main() {
-    Solution solution("1000101");
+    Solution solution("1011000");
     solution.Convert();
     return 0;
 }

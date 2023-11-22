@@ -12,37 +12,36 @@
 class Solution {
 public:
     Solution(std::string InputString) {
-        int requiredRegisters = 4;
+        int requiredRegisters = 3;
         int x;
         for (x = 0; x < requiredRegisters; x++) {
             ShiftRegister sf;
             sf.value = 0;
             shiftRegisters.push_back(sf);
         }
-
         InputString_ = InputString;
+    }
 
-        int i=0;
-        std::string configStringA="1001";
-        std::string configStringB="1111";
-        std::string configStringC="1111";
-        std::string configStringD="0000";
+    void CreateRegisterSubset() {
+        std::string configStringA="111";
+        std::string configStringB="011";
+        std::string configStringC="101";
+        std::string configStringD="000";
+        shiftRegistersA.clear();
+        shiftRegistersB.clear();
+        shiftRegistersC.clear();
+        shiftRegistersD.clear();
         for (int j = 0; j < shiftRegisters.size(); j++) {
             if (configStringA.substr(j, 1) == "1") {
-                shiftRegisterA.push_back(shiftRegisters[j]);
+                shiftRegistersA.push_back(shiftRegisters[j]);
             }
             if (configStringB.substr(j, 1) == "1") {
-                shiftRegisterB.push_back(shiftRegisters[j]);
+                shiftRegistersB.push_back(shiftRegisters[j]);
             }
             if (configStringC.substr(j, 1) == "1") {
-                shiftRegisterC.push_back(shiftRegisters[j]);
-            }
-            if (configStringD.substr(j, 1) == "1") {
-                shiftRegisterD.push_back(shiftRegisters[j]);
+                shiftRegistersC.push_back(shiftRegisters[j]);
             }
         }
-
-        std::cerr << shiftRegisterA.size() << std::endl;
     }
 
     void Convert() {
@@ -54,24 +53,32 @@ public:
             }
             shiftRegisters[0].value = InputValue;
 
-            int result = 0;
-            for (ShiftRegister shiftRegister : shiftRegisterA) {
-                //result = ShiftRegister ^ result;
-             }
-            int A = shiftRegisters[0].value ^ shiftRegisters[1].value ^ shiftRegisters[2].value;
-            int B = shiftRegisters[1].value ^ shiftRegisters[2].value;
-            int C = shiftRegisters[0].value ^ shiftRegisters[2].value;
+            CreateRegisterSubset();
 
-            std::cout << A << B << C;
+            int A = shiftRegistersA[0].value;
+            for (int k = 1; k < shiftRegistersA.size(); k++) {
+                A ^= shiftRegistersA[k].value;
+            }
+
+            int B = shiftRegistersB[0].value;
+            for (int k = 1; k < shiftRegistersB.size(); k++) {
+                B ^= shiftRegistersB[k].value;
+            }
+
+            int C = shiftRegistersC[0].value;
+            for (int k = 1; k < shiftRegistersC.size(); k++) {
+                C ^= shiftRegistersC[k].value;
+            }
+            std::cout << A << B << C << std::endl;
         }
     }
 
 private:
     std::vector<ShiftRegister> shiftRegisters;
-    std::vector<ShiftRegister> shiftRegisterA;
-    std::vector<ShiftRegister> shiftRegisterB;
-    std::vector<ShiftRegister> shiftRegisterC;
-    std::vector<ShiftRegister> shiftRegisterD;
+    std::vector<ShiftRegister> shiftRegistersA;
+    std::vector<ShiftRegister> shiftRegistersB;
+    std::vector<ShiftRegister> shiftRegistersC;
+    std::vector<ShiftRegister> shiftRegistersD;
     std::string InputString_;
 };
 #endif //ENCODER_H
